@@ -1,0 +1,39 @@
+# Carpetas de Visual Studio
+.vs/
+[Bb]in/
+[Oo]bj/
+
+# Archivos de usuario de VS
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs y temporales
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+*.cache
+*.pdb
+*.mdb
+
+# Configuración de dependencias
+packages/
+*.nupkg
+project.lock.json
+
+# Publicaciones
+publish/
+*.Publish.xml
+
+# Archivos de build locales
+*.dbmdl
+*.bak
+*.ldf
+*.mdf
+
+# Archivos de secretos y configuraciones locales
+*.env
+*/appsettings*.json
+*/secrets.json
