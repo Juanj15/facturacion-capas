@@ -29,7 +29,7 @@
             btnBuscarEmpleados = new MaterialSkin.Controls.MaterialButton();
             dgvEmpleados = new DataGridView();
             btnNuevoEmpleado = new MaterialSkin.Controls.MaterialButton();
-            IdEmpleado = new DataGridViewTextBoxColumn();
+            ID = new DataGridViewTextBoxColumn();
             CLIENTE = new DataGridViewTextBoxColumn();
             DOCUMENTO = new DataGridViewTextBoxColumn();
             TELEFONO = new DataGridViewTextBoxColumn();
@@ -46,7 +46,7 @@
             materialLabel1.AutoSize = true;
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel1.Location = new Point(522, 60);
+            materialLabel1.Location = new Point(457, 45);
             materialLabel1.MouseState = MaterialSkin.MouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
             materialLabel1.Size = new Size(248, 19);
@@ -63,7 +63,8 @@
             txtBuscarEmpleados.Font = new Font("Segoe UI", 10.2F);
             txtBuscarEmpleados.HideSelection = true;
             txtBuscarEmpleados.LeadingIcon = null;
-            txtBuscarEmpleados.Location = new Point(55, 132);
+            txtBuscarEmpleados.Location = new Point(48, 99);
+            txtBuscarEmpleados.Margin = new Padding(3, 2, 3, 2);
             txtBuscarEmpleados.MaxLength = 32767;
             txtBuscarEmpleados.MouseState = MaterialSkin.MouseState.OUT;
             txtBuscarEmpleados.Name = "txtBuscarEmpleados";
@@ -75,7 +76,7 @@
             txtBuscarEmpleados.SelectionLength = 0;
             txtBuscarEmpleados.SelectionStart = 0;
             txtBuscarEmpleados.ShortcutsEnabled = true;
-            txtBuscarEmpleados.Size = new Size(488, 48);
+            txtBuscarEmpleados.Size = new Size(427, 48);
             txtBuscarEmpleados.TabIndex = 1;
             txtBuscarEmpleados.TabStop = false;
             txtBuscarEmpleados.Text = "Buscar empleado";
@@ -90,8 +91,8 @@
             btnBuscarEmpleados.Depth = 0;
             btnBuscarEmpleados.HighEmphasis = true;
             btnBuscarEmpleados.Icon = null;
-            btnBuscarEmpleados.Location = new Point(561, 144);
-            btnBuscarEmpleados.Margin = new Padding(4, 6, 4, 6);
+            btnBuscarEmpleados.Location = new Point(491, 108);
+            btnBuscarEmpleados.Margin = new Padding(4);
             btnBuscarEmpleados.MouseState = MaterialSkin.MouseState.HOVER;
             btnBuscarEmpleados.Name = "btnBuscarEmpleados";
             btnBuscarEmpleados.NoAccentTextColor = Color.Empty;
@@ -107,11 +108,12 @@
             dgvEmpleados.BackgroundColor = SystemColors.Control;
             dgvEmpleados.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dgvEmpleados.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvEmpleados.Columns.AddRange(new DataGridViewColumn[] { IdEmpleado, CLIENTE, DOCUMENTO, TELEFONO, CORREO, DIRECCIÓN, ROL, colEditar, colBorrar });
-            dgvEmpleados.Location = new Point(55, 209);
+            dgvEmpleados.Columns.AddRange(new DataGridViewColumn[] { ID, CLIENTE, DOCUMENTO, TELEFONO, CORREO, DIRECCIÓN, ROL, colEditar, colBorrar });
+            dgvEmpleados.Location = new Point(48, 157);
+            dgvEmpleados.Margin = new Padding(3, 2, 3, 2);
             dgvEmpleados.Name = "dgvEmpleados";
             dgvEmpleados.RowHeadersWidth = 51;
-            dgvEmpleados.Size = new Size(1188, 282);
+            dgvEmpleados.Size = new Size(1040, 212);
             dgvEmpleados.TabIndex = 3;
             dgvEmpleados.CellContentClick += dgvEmpleados_CellContentClick;
             // 
@@ -122,8 +124,8 @@
             btnNuevoEmpleado.Depth = 0;
             btnNuevoEmpleado.HighEmphasis = true;
             btnNuevoEmpleado.Icon = null;
-            btnNuevoEmpleado.Location = new Point(984, 144);
-            btnNuevoEmpleado.Margin = new Padding(4, 6, 4, 6);
+            btnNuevoEmpleado.Location = new Point(861, 108);
+            btnNuevoEmpleado.Margin = new Padding(4);
             btnNuevoEmpleado.MouseState = MaterialSkin.MouseState.HOVER;
             btnNuevoEmpleado.Name = "btnNuevoEmpleado";
             btnNuevoEmpleado.NoAccentTextColor = Color.Empty;
@@ -135,13 +137,13 @@
             btnNuevoEmpleado.UseVisualStyleBackColor = true;
             btnNuevoEmpleado.Click += btnNuevoEmpleado_Click;
             // 
-            // IdEmpleado
+            // ID
             // 
-            IdEmpleado.DataPropertyName = "IdEmpleado";
-            IdEmpleado.HeaderText = "ID";
-            IdEmpleado.MinimumWidth = 6;
-            IdEmpleado.Name = "IdEmpleado";
-            IdEmpleado.Width = 80;
+            ID.DataPropertyName = "IdEmpleado";
+            ID.FillWeight = 25F;
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            ID.Width = 50;
             // 
             // CLIENTE
             // 
@@ -157,7 +159,6 @@
             DOCUMENTO.HeaderText = "DOCUMENTO";
             DOCUMENTO.MinimumWidth = 6;
             DOCUMENTO.Name = "DOCUMENTO";
-            DOCUMENTO.Width = 150;
             // 
             // TELEFONO
             // 
@@ -165,7 +166,6 @@
             TELEFONO.HeaderText = "TELÉFONO";
             TELEFONO.MinimumWidth = 6;
             TELEFONO.Name = "TELEFONO";
-            TELEFONO.Width = 150;
             // 
             // CORREO
             // 
@@ -185,11 +185,10 @@
             // 
             // ROL
             // 
-            ROL.DataPropertyName = "IdRolEmpleado";
+            ROL.DataPropertyName = "NombreRol";
             ROL.HeaderText = "ROL";
             ROL.MinimumWidth = 6;
             ROL.Name = "ROL";
-            ROL.Width = 125;
             // 
             // colEditar
             // 
@@ -211,15 +210,16 @@
             // 
             // frmEmpleados
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1300, 607);
+            ClientSize = new Size(1138, 455);
             Controls.Add(btnNuevoEmpleado);
             Controls.Add(dgvEmpleados);
             Controls.Add(btnBuscarEmpleados);
             Controls.Add(txtBuscarEmpleados);
             Controls.Add(materialLabel1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "frmEmpleados";
             Text = "frmEmpleados";
             Load += frmEmpleados_Load;
@@ -235,7 +235,7 @@
         private MaterialSkin.Controls.MaterialButton btnBuscarEmpleados;
         private System.Windows.Forms.DataGridView dgvEmpleados;
         private MaterialSkin.Controls.MaterialButton btnNuevoEmpleado;
-        private DataGridViewTextBoxColumn IdEmpleado;
+        private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn CLIENTE;
         private DataGridViewTextBoxColumn DOCUMENTO;
         private DataGridViewTextBoxColumn TELEFONO;

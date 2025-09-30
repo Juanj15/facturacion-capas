@@ -28,7 +28,6 @@
             txtNombre = new MaterialSkin.Controls.MaterialTextBox2();
             txtDocumento = new MaterialSkin.Controls.MaterialTextBox2();
             txtTelefono = new MaterialSkin.Controls.MaterialTextBox2();
-            btnGuardar = new MaterialSkin.Controls.MaterialButton();
             btnCancelar = new MaterialSkin.Controls.MaterialButton();
             materialLabel1 = new MaterialSkin.Controls.MaterialLabel();
             materialLabel2 = new MaterialSkin.Controls.MaterialLabel();
@@ -39,6 +38,7 @@
             txtDireccion = new MaterialSkin.Controls.MaterialTextBox2();
             cboRol = new MaterialSkin.Controls.MaterialComboBox();
             materialLabel6 = new MaterialSkin.Controls.MaterialLabel();
+            materialButton1 = new MaterialSkin.Controls.MaterialButton();
             SuspendLayout();
             // 
             // label1
@@ -79,7 +79,7 @@
             txtNombre.TextAlign = HorizontalAlignment.Left;
             txtNombre.TrailingIcon = null;
             txtNombre.UseSystemPasswordChar = false;
-            txtNombre.Click += txtNombre_Click;
+            //txtNombre.Click += txtNombre_Click;
             // 
             // txtDocumento
             // 
@@ -139,25 +139,6 @@
             txtTelefono.TrailingIcon = null;
             txtTelefono.UseSystemPasswordChar = false;
             // 
-            // btnGuardar
-            // 
-            btnGuardar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnGuardar.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
-            btnGuardar.Depth = 0;
-            btnGuardar.HighEmphasis = true;
-            btnGuardar.Icon = null;
-            btnGuardar.Location = new Point(204, 493);
-            btnGuardar.Margin = new Padding(4);
-            btnGuardar.MouseState = MaterialSkin.MouseState.HOVER;
-            btnGuardar.Name = "btnGuardar";
-            btnGuardar.NoAccentTextColor = Color.Empty;
-            btnGuardar.Size = new Size(88, 36);
-            btnGuardar.TabIndex = 4;
-            btnGuardar.Text = "GUARDAR";
-            btnGuardar.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
-            btnGuardar.UseAccentColor = false;
-            btnGuardar.UseVisualStyleBackColor = true;
-            // 
             // btnCancelar
             // 
             btnCancelar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -176,6 +157,8 @@
             btnCancelar.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
             btnCancelar.UseAccentColor = false;
             btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
+
             // 
             // materialLabel1
             // 
@@ -309,7 +292,6 @@
             cboRol.FormattingEnabled = true;
             cboRol.IntegralHeight = false;
             cboRol.ItemHeight = 43;
-            cboRol.Items.AddRange(new object[] { "Gerente", "Secretaría", "Operario", "Administrativo" });
             cboRol.Location = new Point(161, 425);
             cboRol.Margin = new Padding(3, 2, 3, 2);
             cboRol.MaxDropDownItems = 4;
@@ -332,13 +314,33 @@
             materialLabel6.TabIndex = 14;
             materialLabel6.Text = "Rol";
             // 
+            // materialButton1
+            // 
+            materialButton1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            materialButton1.Density = MaterialSkin.Controls.MaterialButton.MaterialButtonDensity.Default;
+            materialButton1.Depth = 0;
+            materialButton1.HighEmphasis = true;
+            materialButton1.Icon = null;
+            materialButton1.Location = new Point(200, 493);
+            materialButton1.Margin = new Padding(4);
+            materialButton1.MouseState = MaterialSkin.MouseState.HOVER;
+            materialButton1.Name = "materialButton1";
+            materialButton1.NoAccentTextColor = Color.Empty;
+            materialButton1.Size = new Size(88, 36);
+            materialButton1.TabIndex = 15;
+            materialButton1.Text = "GUARDAR";
+            materialButton1.Type = MaterialSkin.Controls.MaterialButton.MaterialButtonType.Contained;
+            materialButton1.UseAccentColor = false;
+            materialButton1.UseVisualStyleBackColor = true;
+            materialButton1.Click += materialButton1_Click;
+            // 
             // FrmEmpleadoEdit
             // 
-            AcceptButton = btnGuardar;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = btnCancelar;
             ClientSize = new Size(615, 554);
+            Controls.Add(materialButton1);
             Controls.Add(materialLabel6);
             Controls.Add(cboRol);
             Controls.Add(txtDireccion);
@@ -349,7 +351,6 @@
             Controls.Add(materialLabel2);
             Controls.Add(materialLabel1);
             Controls.Add(btnCancelar);
-            Controls.Add(btnGuardar);
             Controls.Add(txtTelefono);
             Controls.Add(txtDocumento);
             Controls.Add(txtNombre);
@@ -373,7 +374,6 @@
         private MaterialSkin.Controls.MaterialTextBox2 txtNombre;
         private MaterialSkin.Controls.MaterialTextBox2 txtDocumento;
         private MaterialSkin.Controls.MaterialTextBox2 txtTelefono;
-        private MaterialSkin.Controls.MaterialButton btnGuardar;
         private MaterialSkin.Controls.MaterialButton btnCancelar;
         private MaterialSkin.Controls.MaterialLabel materialLabel1;
         private MaterialSkin.Controls.MaterialLabel materialLabel2;
@@ -384,5 +384,6 @@
         private MaterialSkin.Controls.MaterialTextBox2 txtDireccion;
         private MaterialSkin.Controls.MaterialComboBox cboRol;
         private MaterialSkin.Controls.MaterialLabel materialLabel6;
+        private MaterialSkin.Controls.MaterialButton materialButton1;
     }
 }
