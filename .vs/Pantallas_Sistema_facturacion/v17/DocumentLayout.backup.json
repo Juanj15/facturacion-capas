@@ -1,7 +1,28 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Jaime\\Music\\gitmulticapas\\28092025\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B18367AD-78D7-4CA5-AF07-E3E17A2363B6}|Capa_Negocio\\Capa_Negocio.csproj|c:\\juan david\\pascual bravo\\semestres\\semestre 4\\herramientas de programacion iii\\taller 3\\capa_negocio\\negempleados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B18367AD-78D7-4CA5-AF07-E3E17A2363B6}|Capa_Negocio\\Capa_Negocio.csproj|solutionrelative:capa_negocio\\negempleados.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B18367AD-78D7-4CA5-AF07-E3E17A2363B6}|Capa_Negocio\\Capa_Negocio.csproj|c:\\juan david\\pascual bravo\\semestres\\semestre 4\\herramientas de programacion iii\\taller 3\\capa_negocio\\negclientes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B18367AD-78D7-4CA5-AF07-E3E17A2363B6}|Capa_Negocio\\Capa_Negocio.csproj|solutionrelative:capa_negocio\\negclientes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29009764-83FF-E243-427C-EE05CA2C5743}|Pantallas_Sistema_facturacion\\Pantallas_Sistema_facturacion.csproj|c:\\juan david\\pascual bravo\\semestres\\semestre 4\\herramientas de programacion iii\\taller 3\\pantallas_sistema_facturacion\\seguridad\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29009764-83FF-E243-427C-EE05CA2C5743}|Pantallas_Sistema_facturacion\\Pantallas_Sistema_facturacion.csproj|solutionrelative:pantallas_sistema_facturacion\\seguridad\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29009764-83FF-E243-427C-EE05CA2C5743}|Pantallas_Sistema_facturacion\\Pantallas_Sistema_facturacion.csproj|c:\\juan david\\pascual bravo\\semestres\\semestre 4\\herramientas de programacion iii\\taller 3\\pantallas_sistema_facturacion\\seguridad\\rolesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29009764-83FF-E243-427C-EE05CA2C5743}|Pantallas_Sistema_facturacion\\Pantallas_Sistema_facturacion.csproj|solutionrelative:pantallas_sistema_facturacion\\seguridad\\rolesdao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29009764-83FF-E243-427C-EE05CA2C5743}|Pantallas_Sistema_facturacion\\Pantallas_Sistema_facturacion.csproj|c:\\juan david\\pascual bravo\\semestres\\semestre 4\\herramientas de programacion iii\\taller 3\\pantallas_sistema_facturacion\\seguridad\\empleadodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29009764-83FF-E243-427C-EE05CA2C5743}|Pantallas_Sistema_facturacion\\Pantallas_Sistema_facturacion.csproj|solutionrelative:pantallas_sistema_facturacion\\seguridad\\empleadodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +30,81 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NEGEmpleados.cs",
+              "DocumentMoniker": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Capa_Negocio\\NEGEmpleados.cs",
+              "RelativeDocumentMoniker": "Capa_Negocio\\NEGEmpleados.cs",
+              "ToolTip": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Capa_Negocio\\NEGEmpleados.cs",
+              "RelativeToolTip": "Capa_Negocio\\NEGEmpleados.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T02:51:11.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NEGClientes.cs",
+              "DocumentMoniker": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Capa_Negocio\\NEGClientes.cs",
+              "RelativeDocumentMoniker": "Capa_Negocio\\NEGClientes.cs",
+              "ToolTip": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Capa_Negocio\\NEGClientes.cs",
+              "RelativeToolTip": "Capa_Negocio\\NEGClientes.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T02:51:10.152Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Pantallas_Sistema_facturacion\\Seguridad\\Usuario.cs",
+              "RelativeDocumentMoniker": "Pantallas_Sistema_facturacion\\Seguridad\\Usuario.cs",
+              "ToolTip": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Pantallas_Sistema_facturacion\\Seguridad\\Usuario.cs",
+              "RelativeToolTip": "Pantallas_Sistema_facturacion\\Seguridad\\Usuario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T02:51:05.862Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RolesDAO.cs",
+              "DocumentMoniker": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Pantallas_Sistema_facturacion\\Seguridad\\RolesDAO.cs",
+              "RelativeDocumentMoniker": "Pantallas_Sistema_facturacion\\Seguridad\\RolesDAO.cs",
+              "ToolTip": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Pantallas_Sistema_facturacion\\Seguridad\\RolesDAO.cs",
+              "RelativeToolTip": "Pantallas_Sistema_facturacion\\Seguridad\\RolesDAO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T02:51:04.792Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "EmpleadoDAO.cs",
+              "DocumentMoniker": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Pantallas_Sistema_facturacion\\Seguridad\\EmpleadoDAO.cs",
+              "RelativeDocumentMoniker": "Pantallas_Sistema_facturacion\\Seguridad\\EmpleadoDAO.cs",
+              "ToolTip": "C:\\JUAN DAVID\\PASCUAL BRAVO\\SEMESTRES\\SEMESTRE 4\\HERRAMIENTAS DE PROGRAMACION III\\taller 3\\Pantallas_Sistema_facturacion\\Seguridad\\EmpleadoDAO.cs",
+              "RelativeToolTip": "Pantallas_Sistema_facturacion\\Seguridad\\EmpleadoDAO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-01T02:51:03.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
@@ -34,14 +128,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             }
           ]
         }
