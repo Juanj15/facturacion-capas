@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\Jaime\\Music\\gitmulticapas\\28092025\\",
+=======
+  "WorkspaceRootPath": "C:\\Users\\EQUIPO\\source\\repos\\Juanj15\\facturacion-capas\\",
+>>>>>>> origin/main
   "Documents": [],
   "DocumentGroupContainers": [
     {
@@ -42,6 +46,17 @@
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+<<<<<<< HEAD
+=======
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+>>>>>>> origin/main
             }
           ]
         }
