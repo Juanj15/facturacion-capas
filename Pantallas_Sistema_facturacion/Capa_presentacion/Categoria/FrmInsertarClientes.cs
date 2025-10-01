@@ -2,7 +2,6 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
-using System.Data;
 using System.Windows.Forms;
 
 namespace FrmCategoria

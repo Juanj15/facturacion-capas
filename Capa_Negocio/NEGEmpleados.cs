@@ -5,7 +5,6 @@ using Microsoft.Data.SqlClient;  // ✅ La librería recomendada en .NET 8
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
 using Capa_Datos;
 
 namespace Capa_Negocio

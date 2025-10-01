@@ -12,7 +12,7 @@ namespace Capa_Datos
     {
         private DATConexion conexion = new DATConexion();
 
-        SqlDataReader dataReader;
+        //SqlDataReader dataReader;
         DataTable table = new DataTable();
         SqlCommand comando = new SqlCommand();
 

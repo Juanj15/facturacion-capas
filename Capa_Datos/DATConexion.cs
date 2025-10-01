@@ -1,16 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.SqlClient;  // ✅ La librería recomendada en .NET 8
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace Capa_Datos
 {
     public class DATConexion
     {
-        private SqlConnection Conexion = new SqlConnection("Server=tcp:srv-winforms-g7.database.windows.net,1433;Initial Catalog=DB-facturacion-g7;Persist Security Info=False;User ID=admin-g7;Password=!myA5x5WmSTqp8W;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+        private readonly SqlConnection Conexion;
+
+        public DATConexion()
+        {
+            // Construye la configuración para leer el appsettings.json
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory) // Ruta base de la app
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            IConfiguration configuration = builder.Build();
+
+            // Obtiene la cadena de conexión llamada "AzureSql"
+            string connectionString = configuration.GetConnectionString("AzureSql");
+
+            // Inicializa la conexión
+            Conexion = new SqlConnection(connectionString);
+        }
 
         public SqlConnection OpenConnection()
         {
