@@ -32,12 +32,6 @@ namespace FrmCategoria
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmClientes));
             DGClientes = new DataGridView();
-            IdCliente = new DataGridViewTextBoxColumn();
-            StrNombre = new DataGridViewTextBoxColumn();
-            NumDocumento = new DataGridViewTextBoxColumn();
-            StrTelefono = new DataGridViewTextBoxColumn();
-            BtnEditar = new DataGridViewButtonColumn();
-            BtnEliminar = new DataGridViewButtonColumn();
             dataGridViewImageColumn1 = new DataGridViewImageColumn();
             dataGridViewImageColumn2 = new DataGridViewImageColumn();
             panel1 = new Panel();
@@ -46,6 +40,14 @@ namespace FrmCategoria
             BtnNuevoCliente = new Button();
             BtnSalir = new Button();
             textBoxcliente = new TextBox();
+            IdCliente = new DataGridViewTextBoxColumn();
+            StrNombre = new DataGridViewTextBoxColumn();
+            NumDocumento = new DataGridViewTextBoxColumn();
+            StrDireccion = new DataGridViewTextBoxColumn();
+            StrTelefono = new DataGridViewTextBoxColumn();
+            StrEmail = new DataGridViewTextBoxColumn();
+            BtnEditar = new DataGridViewButtonColumn();
+            BtnEliminar = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)DGClientes).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -55,58 +57,13 @@ namespace FrmCategoria
             // 
             DGClientes.BackgroundColor = SystemColors.ButtonFace;
             DGClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DGClientes.Columns.AddRange(new DataGridViewColumn[] { IdCliente, StrNombre, NumDocumento, StrTelefono, BtnEditar, BtnEliminar });
+            DGClientes.Columns.AddRange(new DataGridViewColumn[] { IdCliente, StrNombre, NumDocumento, StrDireccion, StrTelefono, StrEmail, BtnEditar, BtnEliminar });
             DGClientes.Location = new Point(28, 158);
             DGClientes.Margin = new Padding(4, 3, 4, 3);
             DGClientes.Name = "DGClientes";
-            DGClientes.Size = new Size(1028, 431);
+            DGClientes.Size = new Size(1054, 431);
             DGClientes.TabIndex = 2;
             DGClientes.CellContentClick += dataGridView1_CellContentClick;
-            // 
-            // IdCliente
-            // 
-            IdCliente.DataPropertyName = "IdCliente";
-            IdCliente.HeaderText = "ID";
-            IdCliente.MaxInputLength = 10000;
-            IdCliente.Name = "IdCliente";
-            IdCliente.Width = 30;
-            // 
-            // StrNombre
-            // 
-            StrNombre.DataPropertyName = "StrNombre";
-            StrNombre.HeaderText = "CLIENTE";
-            StrNombre.Name = "StrNombre";
-            StrNombre.Width = 320;
-            // 
-            // NumDocumento
-            // 
-            NumDocumento.DataPropertyName = "NumDocumento";
-            NumDocumento.HeaderText = "DOCUMENTO";
-            NumDocumento.Name = "NumDocumento";
-            NumDocumento.Width = 200;
-            // 
-            // StrTelefono
-            // 
-            StrTelefono.DataPropertyName = "StrTelefono";
-            StrTelefono.HeaderText = "TELEFONO";
-            StrTelefono.Name = "StrTelefono";
-            StrTelefono.Width = 150;
-            // 
-            // BtnEditar
-            // 
-            BtnEditar.HeaderText = "EDITAR";
-            BtnEditar.Name = "BtnEditar";
-            BtnEditar.Text = "Editar";
-            BtnEditar.UseColumnTextForButtonValue = true;
-            BtnEditar.Width = 65;
-            // 
-            // BtnEliminar
-            // 
-            BtnEliminar.HeaderText = "ELIMINAR";
-            BtnEliminar.Name = "BtnEliminar";
-            BtnEliminar.Text = "Eliminar";
-            BtnEliminar.UseColumnTextForButtonValue = true;
-            BtnEliminar.Width = 65;
             // 
             // dataGridViewImageColumn1
             // 
@@ -193,6 +150,65 @@ namespace FrmCategoria
             textBoxcliente.TabIndex = 5;
             textBoxcliente.TextChanged += textBoxcliente_TextChanged;
             // 
+            // IdCliente
+            // 
+            IdCliente.DataPropertyName = "IdCliente";
+            IdCliente.HeaderText = "ID";
+            IdCliente.MaxInputLength = 10000;
+            IdCliente.Name = "IdCliente";
+            IdCliente.Width = 50;
+            // 
+            // StrNombre
+            // 
+            StrNombre.DataPropertyName = "StrNombre";
+            StrNombre.HeaderText = "CLIENTE";
+            StrNombre.Name = "StrNombre";
+            StrNombre.Width = 250;
+            // 
+            // NumDocumento
+            // 
+            NumDocumento.DataPropertyName = "NumDocumento";
+            NumDocumento.HeaderText = "DOCUMENTO";
+            NumDocumento.Name = "NumDocumento";
+            NumDocumento.Width = 130;
+            // 
+            // StrDireccion
+            // 
+            StrDireccion.DataPropertyName = "StrDireccion";
+            StrDireccion.HeaderText = "DIRECCION";
+            StrDireccion.Name = "StrDireccion";
+            StrDireccion.Width = 150;
+            // 
+            // StrTelefono
+            // 
+            StrTelefono.DataPropertyName = "StrTelefono";
+            StrTelefono.HeaderText = "TELEFONO";
+            StrTelefono.Name = "StrTelefono";
+            StrTelefono.Width = 150;
+            // 
+            // StrEmail
+            // 
+            StrEmail.DataPropertyName = "StrEmail";
+            StrEmail.HeaderText = "EMAIL";
+            StrEmail.Name = "StrEmail";
+            StrEmail.Width = 150;
+            // 
+            // BtnEditar
+            // 
+            BtnEditar.HeaderText = "EDITAR";
+            BtnEditar.Name = "BtnEditar";
+            BtnEditar.Text = "Editar";
+            BtnEditar.UseColumnTextForButtonValue = true;
+            BtnEditar.Width = 65;
+            // 
+            // BtnEliminar
+            // 
+            BtnEliminar.HeaderText = "ELIMINAR";
+            BtnEliminar.Name = "BtnEliminar";
+            BtnEliminar.Text = "Eliminar";
+            BtnEliminar.UseColumnTextForButtonValue = true;
+            BtnEliminar.Width = 65;
+            // 
             // FrmClientes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -233,7 +249,9 @@ namespace FrmCategoria
         private DataGridViewTextBoxColumn IdCliente;
         private DataGridViewTextBoxColumn StrNombre;
         private DataGridViewTextBoxColumn NumDocumento;
+        private DataGridViewTextBoxColumn StrDireccion;
         private DataGridViewTextBoxColumn StrTelefono;
+        private DataGridViewTextBoxColumn StrEmail;
         private DataGridViewButtonColumn BtnEditar;
         private DataGridViewButtonColumn BtnEliminar;
     }

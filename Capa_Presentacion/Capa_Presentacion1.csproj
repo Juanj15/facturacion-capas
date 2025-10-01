@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B18367AD-78D7-4CA5-AF07-E3E17A2363B6}</ProjectGuid>
+    <ProjectGuid>{60A48B56-AB6E-4C9F-B4D0-372E10943923}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Capa_Negocio</RootNamespace>
-    <AssemblyName>Capa_Negocio</AssemblyName>
+    <RootNamespace>Capa_Presentacion</RootNamespace>
+    <AssemblyName>Capa_Presentacion</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -198,15 +198,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NEGClientes.cs" />
-    <Compile Include="NEGEmpleados.cs" />
-    <Compile Include="NEGRoles.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Capa_Datos\Capa_Datos.csproj">
-      <Project>{a9f650ca-0e08-4bee-a5f3-309de55e0fa2}</Project>
-      <Name>Capa_Datos</Name>
+    <ProjectReference Include="..\Capa_Negocio\Capa_Negocio.csproj">
+      <Project>{b18367ad-78d7-4ca5-af07-e3e17a2363b6}</Project>
+      <Name>Capa_Negocio</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

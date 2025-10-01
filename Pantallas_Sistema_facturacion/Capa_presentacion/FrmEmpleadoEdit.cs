@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Capa_Negocio;
+using System;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Capa_Negocio;
 
 namespace Pantallas_Sistema_facturacion.Seguridad
 {
     public partial class FrmEmpleadoEdit : Form
     {
-        BLLEmpleados objetoCN = new BLLEmpleados();
-        private readonly Empleado _original;
+        NEGEmpleados objetoCN = new NEGEmpleados();
+        NEGRoles objetoCD = new NEGRoles();
         private readonly ErrorProvider errorProvider1;
 
         // Salida para el llamador
@@ -33,91 +34,45 @@ namespace Pantallas_Sistema_facturacion.Seguridad
         public FrmEmpleadoEdit()
         {
             InitializeComponent();
-
             errorProvider1 = new ErrorProvider { ContainerControl = this };
-
-            AcceptButton = btnGuardar;
-            CancelButton = btnCancelar;
-
-            btnGuardar.Click += btnGuardar_Click;
-            btnCancelar.Click += btnCancelar_Click;
-
-            txtDocumento.KeyPress += SoloNumeros_KeyPress;
-            txtTelefono.KeyPress += SoloNumeros_KeyPress;
-
-            cboRol.DropDownStyle = ComboBoxStyle.DropDownList;
-            CargarRoles(); // ⇦ ahora desde BD
-            Shown += (_, __) => txtNombre.Focus();
-        }
-
-        private void CargarRoles()
-        {
-            try
-            {
-                // Carga desde BD con ADO.NET
-                var roles = RolesDAO.ObtenerParaCombo(); // ⇦ Cambiado a método existente
-                cboRol.DataSource = roles;     // ⇦ lista de RolItem
-                cboRol.ValueMember = "Id";     // ⇦ Id para SelectedValue
-                cboRol.DisplayMember = "NombreRol";
-                cboRol.SelectedIndex = roles.Count > 0 ? 0 : -1;
-            }
-            catch (Exception ex)
-            {
-                // Comentario corto: muestra error si falla la consulta
-                MessageBox.Show("Error cargando roles: " + ex.Message, "Roles", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                cboRol.DataSource = null;
-            }
+            CargarRoles();
         }
 
         public FrmEmpleadoEdit(Empleado existente) : this()
         {
-            _original = existente;
+            if (existente == null) return;
 
-            // Pinta campos
+            IdEmpleado = existente.Id;
+
             txtNombre.Text = existente.Nombre;
             txtDocumento.Text = existente.Documento;
             txtTelefono.Text = existente.Telefono;
             txtCorreo.Text = existente.Correo;
             txtDireccion.Text = existente.Direccion;
 
-            // Selección de rol robusta:
-            // 1) Intentar por Id
-            if (existente.IdRolEmpleado.HasValue)
+            if (!string.IsNullOrWhiteSpace(existente.NombreRol))
             {
-                cboRol.SelectedValue = existente.IdRolEmpleado.Value;
-                if (cboRol.SelectedIndex >= 0) return; // ok
-            }
-
-            // 2) Intentar por nombre (si vino sin Id)
-            if (!string.IsNullOrWhiteSpace(existente.NombreRol) && cboRol.Items.Count > 0)
-            {
-                for (int i = 0; i < cboRol.Items.Count; i++)
-                {
-                    var item = (RolItem)cboRol.Items[i];
-                    if (string.Equals(item.NombreRol, existente.NombreRol, StringComparison.OrdinalIgnoreCase))
-                    {
-                        cboRol.SelectedIndex = i;
-                        break;
-                    }
-                }
+                cboRol.SelectedIndex = cboRol.FindStringExact(existente.NombreRol);
             }
         }
 
-        // Crea un Empleado listo para guardar (lo usa el formulario padre)
-        public Empleado ToEmpleado()
+        private void CargarRoles()
         {
-            return new Empleado
+            try
             {
-                // Nota: el Id lo asigna el llamador en edición (mantiene el existente)
-                Nombre = this.Nombre,
-                Documento = this.Documento,
-                Telefono = this.Telefono,
-                Correo = this.Correo,
-                Direccion = this.Direccion,
-                IdRolEmpleado = this.IdRolEmpleado,
-                NombreRol = this.NombreRol
-            };
+                DataTable dt = objetoCD.ObtenerRoles();
+
+                cboRol.DataSource = dt;
+                cboRol.DisplayMember = "NombreRol";  // Lo que se muestra al usuario
+                cboRol.ValueMember = "NombreRol";           // El valor real que usarás en BD (debe ser numérico)
+                cboRol.SelectedIndex = -1;           // Inicialmente sin selección
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+        public int IdEmpleado { get; set; }
 
         private bool SoloDigitos(string s) =>
             !string.IsNullOrWhiteSpace(s) && s.All(char.IsDigit);
@@ -157,17 +112,6 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 ok = false;
             }
 
-            if (IdRolEmpleado == null)
-            {
-                errorProvider1.SetError(cboRol, "Selecciona un rol");
-                ok = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(Correo))
-            {
-                errorProvider1.SetError(txtCorreo, "El correo es necesario");
-                ok = false;
-            }
             else
             {
                 // Regex básica para validar formato de email
@@ -180,51 +124,6 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             }
 
             return ok;
-        }
-
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                //Validación de controles
-                if (txtNombre.Text == "")
-                {
-                    MessageBox.Show("Falta Ingresar el Usuario", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtNombre.Focus();
-                    return;
-                }
-                if (txtDocumento.Text == "")
-                {
-                    MessageBox.Show("Falta Ingresar la Contraseña", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtDocumento.Focus();
-                    return;
-                }
-                if (txtTelefono.Text == "")
-                {
-                    MessageBox.Show("Falta Ingresar la Contraseña", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtTelefono.Focus();
-                    return;
-                }
-                if (txtCorreo.Text == "")
-                {
-                    MessageBox.Show("Falta Ingresar el Nro de Intentos", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtCorreo.Focus();
-                    return;
-                }
-                if (txtDireccion.Text == "")
-                {
-                    MessageBox.Show("Falta Ingresar el Nivel de Seguridad", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtDireccion.Focus();
-                    return;
-                }
-
-                objetoCN.Create(txtNombre.Text, Convert.ToInt32(txtDocumento.Text), txtDireccion.Text, txtTelefono.Text, txtCorreo.Text, 1, DateTime.Now, DateTime.Now, "prueba", DateTime.Now, "prueba usuario", Convert.ToBoolean(1));
-                MessageBox.Show("Se guardo correctamente");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("No se pudo insertar los datos, se encontro el siguiente error : " + ex);
-            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -244,9 +143,54 @@ namespace Pantallas_Sistema_facturacion.Seguridad
 
         }
 
-        private void txtNombre_Click(object sender, EventArgs e)
+        private void materialButton1_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (!Validar()) return;
 
+                if (!long.TryParse(txtDocumento.Text.Trim(), out long documento))
+                {
+                    MessageBox.Show("El documento debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtDocumento.Focus();
+                    return;
+                }
+
+                if (IdEmpleado == 0)
+                {
+                    objetoCN.Create(
+                        txtNombre.Text.Trim(),
+                        documento,
+                        txtDireccion.Text.Trim(),
+                        txtTelefono.Text.Trim(),
+                        txtCorreo.Text.Trim(),
+                        NombreRol,
+                        Environment.UserName
+                    );
+                    MessageBox.Show("Empleado creado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    objetoCN.Update(
+                        IdEmpleado,
+                        txtNombre.Text.Trim(),
+                        documento,
+                        txtTelefono.Text.Trim(),
+                        txtCorreo.Text.Trim(),
+                        txtDireccion.Text.Trim(),
+                        NombreRol,
+                        Environment.UserName
+                    );
+                    MessageBox.Show("Empleado actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar el empleado: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Capa_Negocio;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 using System.Windows.Forms;
-using Microsoft.Data.SqlClient;
-using System.Data;
 
 namespace FrmCategoria
 {
     public partial class FrmInsertarClientes : Form
     {
+        private readonly NEGClientes negocioClientes = new NEGClientes();
 
         public FrmInsertarClientes()
         {
@@ -33,24 +34,23 @@ namespace FrmCategoria
 
         private void CargarCliente(int id)
         {
-            // Codigo para cargar los datos del cliente desde la base de datos TBLCLIENTES si el idcliente es diferente de 0
-            string connStr = AppConfig.ConnString;
-            string query = @"
-                SELECT StrNombre, NumDocumento, StrDireccion, StrTelefono, StrEmail FROM TBLCLIENTES WHERE IdCliente = @IdCliente";
             try
             {
-                using var conn = new SqlConnection(connStr);
-                using var cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@IdCliente", id);
-                conn.Open();
-                using var rdr = cmd.ExecuteReader();
-                if (rdr.Read())
+                DataTable clientes = negocioClientes.View();
+                DataRow[] cliente = clientes.Select($"IdCliente = {id}");
+
+                if (cliente.Length > 0)
                 {
-                    TxtNombre.Text = rdr["StrNombre"]?.ToString() ?? "";
-                    TxtDocumento.Text = rdr["NumDocumento"]?.ToString() ?? "";
-                    TxtDireccion.Text = rdr["StrDireccion"]?.ToString() ?? "";
-                    TxtTelefono.Text = rdr["StrTelefono"]?.ToString() ?? "";
-                    TxtEmail.Text = rdr["StrEmail"]?.ToString() ?? "";
+                    TxtNombre.Text = cliente[0]["StrNombre"].ToString();
+                    TxtDocumento.Text = cliente[0]["NumDocumento"].ToString();
+                    TxtDireccion.Text = cliente[0]["StrDireccion"].ToString();
+                    TxtTelefono.Text = cliente[0]["StrTelefono"].ToString();
+                    TxtEmail.Text = cliente[0]["StrEmail"].ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Cliente no encontrado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Close();
                 }
             }
             catch (Exception ex)
@@ -64,11 +64,8 @@ namespace FrmCategoria
             this.Close();
         }
 
-
-
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            // Codigo donde validara que el campo nombre no este vacio, de lo contrario mostrara un mensaje de advertencia
             var nombre = TxtNombre.Text.Trim();
             if (string.IsNullOrEmpty(nombre))
             {
@@ -76,86 +73,33 @@ namespace FrmCategoria
                 return;
             }
 
-            var documento = TxtDocumento.Text.Trim();
-            if (string.IsNullOrEmpty(documento))
+            if (string.IsNullOrEmpty(TxtDocumento.Text.Trim()))
             {
                 MessageBox.Show("El documento es obligatorio.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var numDocumento = TxtDocumento.Text.Trim();
-            var direccion = TxtDireccion.Text.Trim();
-            var telefono = TxtTelefono.Text.Trim();
-            var email = TxtEmail.Text.Trim();
-            var usuario = Environment.UserName ?? "system";
-            var fechaMod = DateTime.Now;
-
-            string connStr = AppConfig.ConnString;
-
             try
             {
-                using var conn = new SqlConnection(connStr);
-                conn.Open();
+                long numDocumento = Convert.ToInt64(TxtDocumento.Text.Trim());
+                string direccion = TxtDireccion.Text.Trim();
+                string telefono = TxtTelefono.Text.Trim();
+                string email = TxtEmail.Text.Trim();
+                string usuario = Environment.UserName ?? "system";
 
                 if (IdCliente == 0)
                 {
-                    // Si el IdCliente es 0, entonces insertara a la base de datos TBLCLIENTES un nuevo cliente.
-                    string insertSql = @"
-                        INSERT INTO TBLCLIENTES
-                            (StrNombre, NumDocumento, StrDireccion, StrTelefono, StrEmail, DtmFechaModifica, StrUsuarioModifica)
-                        VALUES
-                            (@StrNombre, @NumDocumento, @StrDireccion, @StrTelefono, @StrEmail, @DtmFechaModifica, @StrUsuarioModifica);
-                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
-
-                    using var cmd = new SqlCommand(insertSql, conn);
-                    cmd.Parameters.AddWithValue("@StrNombre", nombre);
-                    cmd.Parameters.AddWithValue("@NumDocumento", (object)numDocumento ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StrDireccion", (object)direccion ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StrTelefono", (object)telefono ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StrEmail", (object)email ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@DtmFechaModifica", fechaMod);
-                    cmd.Parameters.AddWithValue("@StrUsuarioModifica", usuario);
-
-                    var newIdObj = cmd.ExecuteScalar();
-                    if (newIdObj != null && int.TryParse(newIdObj.ToString(), out int newId))
-                    {
-                        TxTId_Cliente.Text = newId.ToString();
-                    }
-
+                    // ✅ Crear nuevo cliente
+                    negocioClientes.Create(nombre, numDocumento, direccion, telefono, email, usuario);
                     MessageBox.Show("Cliente agregado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // Si el IdCliente es diferente que 0, entonces editara a la base de datos TBLCLIENTES el cliente.
-                    string updateSql = @"
-                        UPDATE TBLCLIENTES
-                        SET StrNombre = @StrNombre,
-                            NumDocumento = @NumDocumento,
-                            StrDireccion = @StrDireccion,
-                            StrTelefono = @StrTelefono,
-                            StrEmail = @StrEmail,
-                            DtmFechaModifica = @DtmFechaModifica,
-                            StrUsuarioModifica = @StrUsuarioModifica
-                        WHERE IdCliente = @IdCliente;";
-
-                    using var cmd = new SqlCommand(updateSql, conn);
-                    cmd.Parameters.AddWithValue("@StrNombre", nombre);
-                    cmd.Parameters.AddWithValue("@NumDocumento", (object)numDocumento ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StrDireccion", (object)direccion ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StrTelefono", (object)telefono ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@StrEmail", (object)email ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@DtmFechaModifica", fechaMod);
-                    cmd.Parameters.AddWithValue("@StrUsuarioModifica", usuario);
-                    cmd.Parameters.AddWithValue("@IdCliente", IdCliente);
-
-                    int rows = cmd.ExecuteNonQuery();
-                    if (rows > 0)
-                        MessageBox.Show("Cliente actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    else
-                        MessageBox.Show("No se encontró el cliente para actualizar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    // ✅ Actualizar cliente existente
+                    negocioClientes.Update(IdCliente, nombre, numDocumento, telefono, email, direccion, usuario);
+                    MessageBox.Show("Cliente actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                // Acualiza el dtgclientes en FrmClientes
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

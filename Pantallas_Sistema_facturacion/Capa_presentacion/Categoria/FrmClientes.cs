@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Capa_Negocio;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using Microsoft.Data.SqlClient;
 
 
 namespace FrmCategoria
 {
     public partial class FrmClientes : Form
     {
+        private readonly NEGClientes negocioClientes = new NEGClientes();
+
         public FrmClientes()
         {
             InitializeComponent();
@@ -16,76 +19,76 @@ namespace FrmCategoria
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //codigo para editar clientes desde el DataGridView
-            if (e.ColumnIndex == DGClientes.Columns["BtnEditar"].Index && e.RowIndex >= 0)
+            // Validar que sea una fila válida
+            if (e.RowIndex < 0) return;
+
+            // Opción para editar cliente
+            if (e.ColumnIndex == DGClientes.Columns["BtnEditar"].Index)
             {
                 var cellValue = DGClientes.Rows[e.RowIndex].Cells["IdCliente"].Value;
                 if (cellValue == null || cellValue == DBNull.Value)
                 {
-                    MessageBox.Show("El ID del cliente no es válido. ");
+                    MessageBox.Show("El ID del cliente no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                int idcliente = Convert.ToInt32(cellValue);
-                FrmInsertarClientes Cliente = new FrmInsertarClientes();
-                Cliente.IdCliente = idcliente;
-                var result = Cliente.ShowDialog();
+
+                int idCliente = Convert.ToInt32(cellValue);
+
+                FrmInsertarClientes clienteForm = new FrmInsertarClientes
+                {
+                    IdCliente = idCliente
+                };
+
+                var result = clienteForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     llenar_grid();
                 }
             }
-            //codigo para eliminar un cliente al hacer clic en el botón "Eliminar" de la fila correspondiente
-            if (e.ColumnIndex == DGClientes.Columns["BtnEliminar"].Index && e.RowIndex >= 0)
+
+            // Opción para eliminar cliente
+            if (e.ColumnIndex == DGClientes.Columns["BtnEliminar"].Index)
             {
                 var cellValue = DGClientes.Rows[e.RowIndex].Cells["IdCliente"].Value;
                 if (cellValue == null || cellValue == DBNull.Value)
                 {
-                    MessageBox.Show("El ID del cliente no es válido.");
+                    MessageBox.Show("El ID del cliente no es válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                int idcliente = Convert.ToInt32(cellValue);
-                var result = MessageBox.Show($"¿Desea eliminar al cliente con ID {idcliente}?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.Yes)
+
+                int idCliente = Convert.ToInt32(cellValue);
+
+                var confirm = MessageBox.Show(
+                    $"¿Desea eliminar al cliente con ID {idCliente}?",
+                    "Confirmar eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (confirm == DialogResult.Yes)
                 {
-                    string connectionString = AppConfig.ConnString;
                     try
                     {
-                        // Baja lógica: marcar como inactivo (sin validar facturas asociadas)
-                        using (var conn = new SqlConnection(connectionString))
-                        using (var cmd = new SqlCommand("UPDATE TBLCLIENTES SET Activo = 0 WHERE IdCliente = @IdCliente", conn))
-                        {
-                            cmd.Parameters.AddWithValue("@IdCliente", idcliente);
-                            conn.Open();
-                            cmd.ExecuteNonQuery();
-                        }
-                        MessageBox.Show($"Cliente con ID {idcliente} eliminado.");
-                        llenar_grid(); // Refresca el grid
+                        negocioClientes.Delete(idCliente, Environment.UserName);
+                        MessageBox.Show($"Cliente con ID {idCliente} eliminado correctamente.", "Eliminación exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        llenar_grid();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error al elimiar el cliente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Error al eliminar el cliente: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-            }
-        }
-
-        private void materialRaisedButton2_Click(object sender, EventArgs e)
-        {
-            FrmInsertarClientes Cliente = new FrmInsertarClientes();
-            Cliente.IdCliente = 0;
-            var result = Cliente.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                llenar_grid();
             }
         }
 
         private void BtnNuevoCliente_Click(object sender, EventArgs e)
         {
-            //codigo para abrir el formulario FrmInsertarClientes en modo de inserción (IdCliente = 0)
-            FrmInsertarClientes Cliente = new FrmInsertarClientes();
-            Cliente.IdCliente = 0;
-            var result = Cliente.ShowDialog();
+            FrmInsertarClientes clienteForm = new FrmInsertarClientes
+            {
+                IdCliente = 0
+            };
+
+            var result = clienteForm.ShowDialog();
             if (result == DialogResult.OK)
             {
                 llenar_grid();
@@ -94,39 +97,11 @@ namespace FrmCategoria
 
         public void llenar_grid()
         {
-            // Codigo para llenar el DataGridView con los datos de la tabla TBLCLIENTES
-            string connectionString = AppConfig.ConnString;
-            string query = @"
-                SELECT IdCliente, StrNombre, NumDocumento, StrDireccion, StrTelefono, StrEmail, DtmFechaModifica, StrUsuarioModifica 
-                FROM TBLCLIENTES
-                WHERE Activo = 1;";
-
-            DataTable dt = new DataTable();
             try
             {
-                using (var conn = new SqlConnection(connectionString))
-                using (var cmd = new SqlCommand(query, conn))
-                using (var adapter = new SqlDataAdapter(cmd))
-                {
-                    conn.Open();
-                    adapter.Fill(dt);
-                }
-
-                DGClientes.AutoGenerateColumns = false;
+                DataTable dt = negocioClientes.View();
+                DGClientes.AutoGenerateColumns = true;
                 DGClientes.DataSource = dt;
-                //codigo para ocultar las columnas que no se desean mostrar en el DataGridView
-                foreach (DataGridViewColumn col in DGClientes.Columns)
-                {
-                    if (col.Name != "IdCliente" &&
-                        col.Name != "StrNombre" &&
-                        col.Name != "NumDocumento" &&
-                        col.Name != "StrTelefono" &&
-                        col.Name != "BtnEditar" &&
-                        col.Name != "BtnEliminar")
-                    {
-                        col.Visible = false;
-                    }
-                }
             }
             catch (Exception ex)
             {
@@ -139,11 +114,6 @@ namespace FrmCategoria
             llenar_grid();
         }
 
-        private void BtnBuscar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BtnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -151,7 +121,6 @@ namespace FrmCategoria
 
         private void textBoxcliente_TextChanged(object sender, EventArgs e)
         {
-            //Codigo para buscar en el DataGridView los clientes que coincidan con el texto ingresado en el TextBox
             string filtro = textBoxcliente.Text.Trim();
 
             if (string.IsNullOrEmpty(filtro))
@@ -159,44 +128,11 @@ namespace FrmCategoria
                 llenar_grid();
                 return;
             }
-
-            string connectionString = AppConfig.ConnString;
-            string query = @"
-                SELECT IdCliente, StrNombre, NumDocumento, StrDireccion, StrTelefono, StrEmail, DtmFechaModifica, StrUsuarioModifica 
-                FROM TBLCLIENTES 
-                WHERE Activo = 1 AND (StrNombre LIKE @Filtro OR NumDocumento LIKE @Filtro);";
-
-            DataTable dt = new DataTable();
-            try
+            // Filtro directo sobre el DataTable ya cargado
+            DataTable dt = (DataTable)DGClientes.DataSource;
+            if (dt != null)
             {
-                using (var conn = new SqlConnection(connectionString))
-                using (var cmd = new SqlCommand(query, conn))
-                using (var adapter = new SqlDataAdapter(cmd))
-                {
-                    cmd.Parameters.AddWithValue("@Filtro", "%" + filtro + "%");
-                    conn.Open();
-                    adapter.Fill(dt);
-                }
-
-                DGClientes.AutoGenerateColumns = false;
-                DGClientes.DataSource = dt;
-
-                foreach (DataGridViewColumn col in DGClientes.Columns)
-                {
-                    if (col.Name != "IdCliente" &&
-                        col.Name != "StrNombre" &&
-                        col.Name != "NumDocumento" &&
-                        col.Name != "StrTelefono" &&
-                        col.Name != "BtnEditar" &&
-                        col.Name != "BtnEliminar")
-                    {
-                        col.Visible = false;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al buscar clientes: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dt.DefaultView.RowFilter = $"StrNombre LIKE '%{filtro}%' OR Convert(NumDocumento, 'System.String') LIKE '%{filtro}%'";
             }
         }
     }

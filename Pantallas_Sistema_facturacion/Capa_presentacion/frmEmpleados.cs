@@ -1,17 +1,19 @@
 ﻿using Capa_Negocio;
+using FrmCategoria;
+using Microsoft.Data.SqlClient;  // ✅ La librería recomendada en .NET 8
 using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Pantallas_Sistema_facturacion.Seguridad
 {
     public partial class frmEmpleados : Form
     {
-        BLLEmpleados objetoCN = new BLLEmpleados();
-        private int idEmpleado = 0;
+        NEGEmpleados objetoCN = new NEGEmpleados();
+        private int IdEmpleado = 0;
         // Fuente de datos para enlazar el DataGridView
         private readonly BindingSource _bs = new BindingSource();
 
@@ -49,7 +51,7 @@ namespace Pantallas_Sistema_facturacion.Seguridad
         {
             // Limpia el texto por defecto del campo de búsqueda
             txtBuscarEmpleados.Text = string.Empty;
-            dgvEmpleados.AutoGenerateColumns = true;
+            dgvEmpleados.AutoGenerateColumns = false;
 
 
             // Carga inicial: muestra todos los registros
@@ -78,8 +80,8 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             var colDir = dgvEmpleados.Columns["StrDireccion"];
             if (colDir != null) colDir.DataPropertyName = "StrDireccion";
 
-            var colRol = dgvEmpleados.Columns["IdRolEmpleado"];
-            if (colRol != null) colRol.DataPropertyName = "IdRolEmpleado";
+            var colRol = dgvEmpleados.Columns["NombreRol"];
+            if (colRol != null) colRol.DataPropertyName = "NombreRol";
 
             // Asegura que colEditar sea un botón con texto "Editar"
             var colEditar = dgvEmpleados.Columns["colEditar"];
@@ -135,39 +137,15 @@ namespace Pantallas_Sistema_facturacion.Seguridad
 
             if (!string.IsNullOrWhiteSpace(filtro))
             {
-                // Filtrado en memoria usando DataTable
                 var dv = dt.DefaultView;
-                // Ajusta el nombre de la columna según tu base de datos (ejemplo: "strNombre")
                 dv.RowFilter = $"strNombre LIKE '%{filtro.Replace("'", "''")}%'";
-                dgvEmpleados.DataSource = dv;
+                _bs.DataSource = dv;
             }
             else
             {
-                dgvEmpleados.DataSource = dt;
+                _bs.DataSource = dt;
             }
         }
-        private void NuevoEmpleado()
-        {
-            using var dlg = new FrmEmpleadoEdit();
-            if (dlg.ShowDialog(this) == DialogResult.OK)
-            {
-                var emp = dlg.ToEmpleado();   // ahora sí existe
-                EmpleadoDAO.Guardar(emp, Environment.UserName);
-                RefrescarConFiltroActual();
-            }
-        }
-        private void EditarEmpleado(Empleado emp)
-        {
-            using var dlg = new FrmEmpleadoEdit(emp);
-            if (dlg.ShowDialog(this) == DialogResult.OK)
-            {
-                var actualizado = dlg.ToEmpleado();
-                actualizado.Id = emp.Id;      // conserva el Id original
-                EmpleadoDAO.Guardar(actualizado, Environment.UserName);
-                RefrescarConFiltroActual();
-            }
-        }
-        
 
         void BorrarEmpleado(int idEmpleado)
         {
@@ -181,7 +159,7 @@ namespace Pantallas_Sistema_facturacion.Seguridad
 
             try
             {
-                objetoCN.Delete(idEmpleado);
+                objetoCN.Delete(idEmpleado, Environment.UserName);
                 MessageBox.Show("Empleado eliminado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Cargar(null);
             }
@@ -190,9 +168,6 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 MessageBox.Show("Error eliminando: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
 
         private void RefrescarConFiltroActual()
         {
@@ -204,23 +179,67 @@ namespace Pantallas_Sistema_facturacion.Seguridad
         }
 
         // Handler del botón "Agregar cliente" (cableado en el diseñador)
-        private void btnNuevoEmpleado_Click(object sender, EventArgs e) => NuevoEmpleado();
+        private void btnNuevoEmpleado_Click(object sender, EventArgs e)
+        {
+            //codigo para abrir el formulario FrmInsertarClientes en modo de inserción (IdCliente = 0)
+            FrmEmpleadoEdit Empleado = new FrmEmpleadoEdit();
+            Empleado.IdEmpleado = 0;
+            var result = Empleado.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Cargar(null);
+            }
+        }
 
         // Handler del grid para botones Editar/Borrar (cableado en el diseñador)
         private void dgvEmpleados_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
             var col = dgvEmpleados.Columns[e.ColumnIndex] as DataGridViewButtonColumn;
             if (col == null) return;
 
-            // Obtén el IdEmpleado de la fila seleccionada
             var row = dgvEmpleados.Rows[e.RowIndex];
-            int idEmpleado = Convert.ToInt32(row.Cells["IdEmpleado"].Value);
+            if (row == null) return;
+
+            // Validar que la celda "IdEmpleado" tenga valor antes de convertir
+            if (row.Cells["ID"].Value == null)
+            {
+                MessageBox.Show("No se encontró el ID del empleado seleccionado.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int idEmpleado = Convert.ToInt32(row.Cells["ID"].Value);
 
             if (col.Name == "colEditar")
             {
-                // Aquí deberías cargar el empleado por Id si necesitas editar
-                // Ejemplo: EditarEmpleado(idEmpleado);
+                try
+                {
+                    var empleado = new Empleado
+                    {
+                        Id = idEmpleado,
+                        Nombre = row.Cells["CLIENTE"].Value?.ToString() ?? "",
+                        Documento = row.Cells["DOCUMENTO"].Value?.ToString() ?? "",
+                        Telefono = row.Cells["TELEFONO"].Value?.ToString() ?? "",
+                        Correo = row.Cells["CORREO"].Value?.ToString() ?? "",
+                        Direccion = row.Cells["DIRECCIÓN"].Value?.ToString() ?? "",
+                        NombreRol = row.Cells["ROL"].Value?.ToString() ?? ""
+                    };
+
+                    using (FrmEmpleadoEdit dlg = new FrmEmpleadoEdit(empleado))
+                    {
+                        if (dlg.ShowDialog() == DialogResult.OK)
+                        {
+                            Cargar(null);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al abrir el formulario de edición: " + ex.Message,
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else if (col.Name == "colBorrar")
             {
