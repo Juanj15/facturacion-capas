@@ -198,6 +198,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DALLogin.cs" />
     <Compile Include="DATClientes.cs" />
     <Compile Include="DATConexion.cs" />
     <Compile Include="DATEmpleados.cs" />

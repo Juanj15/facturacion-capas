@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.SqlClient;  // ✅ La librería recomendada en .NET 8
+using Microsoft.Data.SqlClient;  
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;

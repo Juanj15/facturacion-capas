@@ -198,6 +198,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLogin.cs" />
     <Compile Include="NEGClientes.cs" />
     <Compile Include="NEGEmpleados.cs" />
     <Compile Include="NEGRoles.cs" />

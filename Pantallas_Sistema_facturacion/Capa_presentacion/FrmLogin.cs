@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Capa_Negocio;
+using FrmCategoria;
+using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
-
 
 namespace Pantallas_Sistema_facturacion
 {
     public partial class FrmLogin : Form
     {
+        BLLogin login = new BLLogin();
+
         public FrmLogin()
         {
             InitializeComponent();
@@ -35,51 +35,17 @@ namespace Pantallas_Sistema_facturacion
             string usuario = txtUsuario.Text.Trim();
             string contraseña = txtContraseña.Text.Trim();
 
-            if (string.IsNullOrEmpty(usuario) || string.IsNullOrEmpty(contraseña))
+            if (login.Login(usuario, contraseña))
             {
-                MessageBox.Show("Por favor, ingrese usuario y contraseña.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show("Login exitoso. Bienvenido " + usuario);
+                new frmPrincipal().Show();
+                this.Hide();
             }
-
-            using (SqlConnection conn = new SqlConnection(AppConfig.ConnString))
+            else
             {
-                {
-                    try
-                    {
-                        conn.Open();
-
-                        string query = "SELECT COUNT(*) FROM TBLSEGURIDAD " +
-                                        "WHERE StrUsuario = @usuario AND StrClave = @clave ";
-
-                        using (SqlCommand cmd = new SqlCommand(query, conn))
-                        {
-                            cmd.Parameters.AddWithValue("@usuario", usuario);
-                            cmd.Parameters.AddWithValue("@clave", contraseña);
-
-                            int count = (int)cmd.ExecuteScalar();
-
-                            if (count > 0)
-                            {
-                                MessageBox.Show("✅ Login exitoso. Bienvenido " + usuario);
-                                     new frmPrincipal().Show();
-                                     this.Hide();
-                                 }
-                            else
-                            {
-                                MessageBox.Show("Usuario o contraseña incorrectos.");
-                            }
-                        }
-                    }
-
-                    catch (Exception ex) {
-
-                        MessageBox.Show("Error de conexión: " + ex.Message);
-    
-                    }
-
-                }
+                MessageBox.Show("Usuario o contraseña incorrectos.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-                
         }
     }
 }
