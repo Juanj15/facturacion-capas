@@ -198,9 +198,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmpleadoDTO.cs" />
+    <Compile Include="EmpleadoMapper.cs" />
+    <Compile Include="EmpleadoService.cs" />
     <Compile Include="NEGClientes.cs" />
     <Compile Include="NEGEmpleados.cs" />
     <Compile Include="NEGRoles.cs" />
+    <Compile Include="NEGSeguridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

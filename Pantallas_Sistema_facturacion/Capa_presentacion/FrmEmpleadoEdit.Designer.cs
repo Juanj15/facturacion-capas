@@ -300,7 +300,6 @@
             cboRol.Size = new Size(133, 49);
             cboRol.StartIndex = 0;
             cboRol.TabIndex = 13;
-            cboRol.SelectedIndexChanged += cboRol_SelectedIndexChanged;
             // 
             // materialLabel6
             // 
