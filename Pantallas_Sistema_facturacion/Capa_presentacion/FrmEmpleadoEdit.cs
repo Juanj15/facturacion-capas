@@ -68,8 +68,8 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 DataTable dt = objetoCD.ObtenerRoles();
 
                 cboRol.DataSource = dt;
-                cboRol.DisplayMember = "NombreRol";  // lo que ve el usuario
-                cboRol.ValueMember = "IdRol";        // ⚡ clave primaria del rol en la BD
+                cboRol.DisplayMember = "NombreRol";  
+                cboRol.ValueMember = "NombreRol";        
                 cboRol.SelectedIndex = -1;
             }
             catch (Exception ex)
