@@ -3,6 +3,8 @@
 [Bb]in/
 [Oo]bj/
 CopilotIndices/
+bin/
+obj/
 
 # Archivos de usuario de VS
 *.user
