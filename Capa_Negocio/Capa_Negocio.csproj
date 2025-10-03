@@ -198,6 +198,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLLogin.cs" />
     <Compile Include="EmpleadoDTO.cs" />
     <Compile Include="EmpleadoMapper.cs" />
     <Compile Include="EmpleadoService.cs" />
