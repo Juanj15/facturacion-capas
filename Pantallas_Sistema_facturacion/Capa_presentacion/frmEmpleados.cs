@@ -216,7 +216,7 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             {
                 try
                 {
-                    var empleado = new Empleado
+                    var empleado = new EmpleadoDTO
                     {
                         Id = idEmpleado,
                         Nombre = row.Cells["CLIENTE"].Value?.ToString() ?? "",

@@ -9,11 +9,11 @@ namespace Pantallas_Sistema_facturacion.Seguridad
 {
     public partial class FrmEmpleadoEdit : Form
     {
-        NEGEmpleados objetoCN = new NEGEmpleados();
-        NEGRoles objetoCD = new NEGRoles();
+        private readonly EmpleadoService empleadoService = new EmpleadoService();
+        private readonly NEGRoles objetoCD = new NEGRoles();
         private readonly ErrorProvider errorProvider1;
 
-        // Salida para el llamador
+        // Salida para la llamada
         public string Nombre => txtNombre.Text.Trim();
         public string Documento => txtDocumento.Text.Trim();
         public string Telefono => txtTelefono.Text.Trim();
@@ -29,8 +29,12 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 return Convert.ToInt32(v);
             }
         }
+
         public string NombreRol => cboRol.Text?.Trim() ?? "";
 
+        public int IdEmpleado { get; set; }
+
+        // Constructor para crear un nuevo empleado
         public FrmEmpleadoEdit()
         {
             InitializeComponent();
@@ -38,7 +42,8 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             CargarRoles();
         }
 
-        public FrmEmpleadoEdit(Empleado existente) : this()
+        // Constructor para editar un empleado existente
+        public FrmEmpleadoEdit(EmpleadoDTO existente) : this()
         {
             if (existente == null) return;
 
@@ -50,9 +55,9 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             txtCorreo.Text = existente.Correo;
             txtDireccion.Text = existente.Direccion;
 
-            if (!string.IsNullOrWhiteSpace(existente.NombreRol))
+            if (existente.IdRolEmpleado.HasValue)
             {
-                cboRol.SelectedIndex = cboRol.FindStringExact(existente.NombreRol);
+                cboRol.SelectedValue = existente.IdRolEmpleado.Value;
             }
         }
 
@@ -63,16 +68,15 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 DataTable dt = objetoCD.ObtenerRoles();
 
                 cboRol.DataSource = dt;
-                cboRol.DisplayMember = "NombreRol";  // Lo que se muestra al usuario
-                cboRol.ValueMember = "NombreRol";           // El valor real que usarás en BD (debe ser numérico)
-                cboRol.SelectedIndex = -1;           // Inicialmente sin selección
+                cboRol.DisplayMember = "NombreRol";  
+                cboRol.ValueMember = "NombreRol";        
+                cboRol.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error cargando roles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        public int IdEmpleado { get; set; }
 
         private bool SoloDigitos(string s) =>
             !string.IsNullOrWhiteSpace(s) && s.All(char.IsDigit);
@@ -105,13 +109,6 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 errorProvider1.SetError(txtCorreo, "El correo es necesario");
                 ok = false;
             }
-
-            if (string.IsNullOrWhiteSpace(Direccion))
-            {
-                errorProvider1.SetError(txtDireccion, "La dirección es necesaria");
-                ok = false;
-            }
-
             else
             {
                 // Regex básica para validar formato de email
@@ -121,6 +118,12 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                     errorProvider1.SetError(txtCorreo, "Formato de correo no válido");
                     ok = false;
                 }
+            }
+
+            if (string.IsNullOrWhiteSpace(Direccion))
+            {
+                errorProvider1.SetError(txtDireccion, "La dirección es necesaria");
+                ok = false;
             }
 
             return ok;
@@ -138,49 +141,40 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 e.Handled = true;
         }
 
-        private void cboRol_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void materialButton1_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!Validar()) return;
 
-                if (!long.TryParse(txtDocumento.Text.Trim(), out long documento))
+                if (!long.TryParse(txtDocumento.Text.Trim(), out _))
                 {
                     MessageBox.Show("El documento debe ser un número válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtDocumento.Focus();
                     return;
                 }
 
+                // 🔹 Construyo DTO desde la UI
+                var dto = new EmpleadoDTO
+                {
+                    Id = IdEmpleado,
+                    Nombre = txtNombre.Text.Trim(),
+                    Documento = txtDocumento.Text.Trim(),
+                    Telefono = txtTelefono.Text.Trim(),
+                    Correo = txtCorreo.Text.Trim(),
+                    Direccion = txtDireccion.Text.Trim(),
+                    IdRolEmpleado = IdRolEmpleado,
+                    NombreRol = NombreRol
+                };
+
                 if (IdEmpleado == 0)
                 {
-                    objetoCN.Create(
-                        txtNombre.Text.Trim(),
-                        documento,
-                        txtDireccion.Text.Trim(),
-                        txtTelefono.Text.Trim(),
-                        txtCorreo.Text.Trim(),
-                        NombreRol,
-                        Environment.UserName
-                    );
+                    empleadoService.Create(dto, Environment.UserName);
                     MessageBox.Show("Empleado creado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    objetoCN.Update(
-                        IdEmpleado,
-                        txtNombre.Text.Trim(),
-                        documento,
-                        txtTelefono.Text.Trim(),
-                        txtCorreo.Text.Trim(),
-                        txtDireccion.Text.Trim(),
-                        NombreRol,
-                        Environment.UserName
-                    );
+                    empleadoService.Update(dto, Environment.UserName);
                     MessageBox.Show("Empleado actualizado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 

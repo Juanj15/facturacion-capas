@@ -2,19 +2,19 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Capa_Negocio;
 
 namespace Pantallas_Sistema_facturacion.Seguridad
 {
     public partial class frmSeguridad : Form
     {
-        // Empleado actual seleccionado (null si no hay)
-        private Empleado? _empleadoActual;
 
-        // Valores originales para detectar cambios
+        private readonly NEGSeguridad _negocioSeguridad = new NEGSeguridad();
+        private EmpleadoDTO? _empleadoActual;
+
         private string _usernameOriginal = "";
         private string _passwordOriginal = "";
 
-        // Flag para silenciar TextChanged cuando limpiamos por código
         private bool _silencioUI = false;
 
         public frmSeguridad()
@@ -27,7 +27,7 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             // Autocompletar de empleados (TextBox estándar)
             ConfigurarAutoComplete();
 
-            // Enter en el buscador -> cargar empleado
+            // Enter en el buscador > cargar empleado
             txtSegEmpleado.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -37,15 +37,13 @@ namespace Pantallas_Sistema_facturacion.Seguridad
                 }
             };
 
-            // Botones
-            btnSegActualizar.Click += (_, __) => Guardar();   // guarda y limpia
-            btnSegCancelar.Click += (_, __) => LimpiarUI();  // limpia
+            btnSegActualizar.Click += (_, __) => Guardar();
+            btnSegCancelar.Click += (_, __) => LimpiarUI();
 
-            // Cambios de texto -> habilitar/inhabilitar botones si hay diferencias
+            // Cambios de texto > habilitar/inhabilitar botones si hay diferencias
             txtSegUsuario.TextChanged += (_, __) => EvaluarCambios();
             txtSegClave.TextChanged += (_, __) => EvaluarCambios();
 
-            // Validación temprana de tecleo (opcional, mejora UX)
             txtSegUsuario.KeyPress += Usuario_SinEspacios_KeyPress;
             txtSegClave.KeyPress += Clave_SoloAlfanum_KeyPress;
         }
@@ -54,11 +52,7 @@ namespace Pantallas_Sistema_facturacion.Seguridad
         private void ConfigurarAutoComplete()
         {
             var src = new AutoCompleteStringCollection();
-            var nombres = EmpleadoDAO.ObtenerTodos()
-                                       .Select(e => e.Nombre)
-                                       .Distinct()
-                                       .OrderBy(n => n)
-                                       .ToArray();
+            var nombres = _negocioSeguridad.ObtenerNombresEmpleados();
             src.AddRange(nombres);
             txtSegEmpleado.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             txtSegEmpleado.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -77,7 +71,7 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             txtSegUsuario.ReadOnly = true;
             txtSegClave.ReadOnly = true;
 
-            _empleadoActual = null;
+            _empleadoActual = null; // Inicializa _empleadoActual como null
             _usernameOriginal = "";
             _passwordOriginal = "";
 
@@ -98,40 +92,46 @@ namespace Pantallas_Sistema_facturacion.Seguridad
         // Carga al empleado por nombre (primera coincidencia, ignore case)
         private void CargarEmpleadoDesdeUI()
         {
-            var nombre = (txtSegEmpleado.Text ?? "").Trim();
-            if (string.IsNullOrWhiteSpace(nombre))
+            var nombreBuscado = txtSegEmpleado.Text.Trim();
+            if (string.IsNullOrWhiteSpace(nombreBuscado))
             {
-                MessageBox.Show("Ingresa el nombre del empleado.", "Atención",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Ingrese el nombre del empleado.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var emp = EmpleadoDAO.ObtenerTodos()
-            .FirstOrDefault(e => string.Equals(e.Nombre, nombre, StringComparison.OrdinalIgnoreCase));
+            var empleado = _negocioSeguridad.ObtenerEmpleadoPorNombre(nombreBuscado);
 
-            if (emp == null)
+            if (empleado == null)
             {
-                MessageBox.Show("Empleado no encontrado.", "Atención",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Empleado no encontrado.");
+                LimpiarUI();
                 return;
             }
 
-            _empleadoActual = emp;
+            _empleadoActual = empleado;
 
-            var u = UsuarioDAO.BuscarPorEmpleadoId(emp.Id);
-            _silencioUI = true; // evita parpadeo de botones al asignar textos
-            txtSegUsuario.Text = u?.StrUsuario ?? "";
-            txtSegClave.Text = u?.StrClave ?? ""; // solo práctica
-            _silencioUI = false;
+            var usuario = _negocioSeguridad.ObtenerUsuarioPorEmpleado(empleado.Id);
+            if (usuario != null)
+            {
+                txtSegUsuario.Text = usuario.StrUsuario;
+                txtSegClave.Text = usuario.StrClave;
+                _usernameOriginal = usuario.StrUsuario;
+                _passwordOriginal = usuario.StrClave;
+                txtSegUsuario.ReadOnly = false;
+                txtSegClave.ReadOnly = false;
+            }
+            else
+            {
+                txtSegUsuario.Text = "";
+                txtSegClave.Text = "";
+                _usernameOriginal = "";
+                _passwordOriginal = "";
+                txtSegUsuario.ReadOnly = false;
+                txtSegClave.ReadOnly = false;
+            }
 
-            _usernameOriginal = txtSegUsuario.Text;
-            _passwordOriginal = txtSegClave.Text;
-
-            txtSegUsuario.ReadOnly = false;
-            txtSegClave.ReadOnly = false;
-
-            SetBotones(false); // aún no hay cambios
-            txtSegUsuario.Focus();
+            EvaluarCambios();
         }
 
         // Habilita botones si hay diferencias con lo guardado
@@ -149,50 +149,24 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             SetBotones(habilitar: hayCambios);
         }
 
-        // Validación de negocio: usuario requerido, sin espacios; clave >= 6, alfanumérica
+        // Validación de negocio delegada a NEGSeguridad
         private bool ValidarCampos()
         {
             var user = (txtSegUsuario.Text ?? "").Trim();
             var pass = (txtSegClave.Text ?? "").Trim();
 
-            if (string.IsNullOrWhiteSpace(user))
+            var valido = _negocioSeguridad.ValidarCredenciales(user, pass, out var errorMsg);
+            if (!valido)
             {
-                MessageBox.Show("El usuario es requerido.", "Validación",
+                MessageBox.Show(errorMsg, "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSegUsuario.Clear();
-                txtSegUsuario.Focus();
-                return false;
+                if (errorMsg.Contains("usuario")) txtSegUsuario.Focus();
+                else txtSegClave.Focus();
             }
-            if (user.Contains(" "))
-            {
-                MessageBox.Show("El usuario no debe tener espacios.", "Validación",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSegUsuario.Clear();
-                txtSegUsuario.Focus();
-                return false;
-            }
-
-            if (pass.Length < 6)
-            {
-                MessageBox.Show("La contraseña debe tener al menos 6 caracteres.", "Validación",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSegClave.Clear();
-                txtSegClave.Focus();
-                return false;
-            }
-            if (!Regex.IsMatch(pass, @"^[a-zA-Z0-9]+$"))
-            {
-                MessageBox.Show("La contraseña debe ser alfanumérica (sin símbolos ni espacios).", "Validación",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtSegClave.Clear();
-                txtSegClave.Focus();
-                return false;
-            }
-
-            return true;
+            return valido;
         }
 
-        // Guarda en el store (garantiza username único) y limpia la UI
+        // Guarda en la capa de negocio y limpia la UI
         private void Guardar()
         {
             if (_empleadoActual == null)
@@ -204,10 +178,10 @@ namespace Pantallas_Sistema_facturacion.Seguridad
 
             if (!ValidarCampos()) return;
 
-            var ok = UsuarioDAO.Guardar(_empleadoActual.Id,
-                                          txtSegUsuario.Text.Trim(),
-                                          txtSegClave.Text.Trim(),
-                                          out var error);
+            var ok = _negocioSeguridad.GuardarUsuario(_empleadoActual.Id, // Usa el DTO para acceder al Id.
+                                                      txtSegUsuario.Text.Trim(),
+                                                      txtSegClave.Text.Trim(),
+                                                      out var error);
 
             if (!ok)
             {
@@ -220,16 +194,16 @@ namespace Pantallas_Sistema_facturacion.Seguridad
             MessageBox.Show("Credenciales actualizadas.", "OK",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            LimpiarUI(); // dejar listo para la siguiente asignación
+            LimpiarUI();
         }
 
-        // Bloquea espacios en el usuario (opcional)
+        // Bloquea espacios en el usuario
         private void Usuario_SinEspacios_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (char.IsWhiteSpace(e.KeyChar)) e.Handled = true;
         }
 
-        // Solo alfanuméricos en la clave (opcional)
+        // Solo alfanuméricos en la clave
         private void Clave_SoloAlfanum_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsLetterOrDigit(e.KeyChar))

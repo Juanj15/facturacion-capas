@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pantallas_Sistema_facturacion.Seguridad
+namespace Capa_Negocio
 {
-    public class Empleado
+    public class EmpleadoDTO
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = "";
@@ -16,7 +16,5 @@ namespace Pantallas_Sistema_facturacion.Seguridad
         public string Direccion { get; set; } = "";
         public int? IdRolEmpleado { get; set; }
         public string NombreRol { get; set; } = "";
-
-        public bool Activo { get; set; } = true;
     }
 }
