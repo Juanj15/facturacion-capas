@@ -150,7 +150,6 @@
             TxtBuscar.Name = "TxtBuscar";
             TxtBuscar.Size = new Size(718, 34);
             TxtBuscar.TabIndex = 6;
-            TxtBuscar.TextChanged += TxtBuscar_TextChanged_1;
             // 
             // panel2
             // 

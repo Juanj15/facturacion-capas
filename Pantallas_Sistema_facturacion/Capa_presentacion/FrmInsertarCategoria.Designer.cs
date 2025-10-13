@@ -43,51 +43,47 @@
             LblCategoria.AutoSize = true;
             LblCategoria.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             LblCategoria.ForeColor = Color.White;
-            LblCategoria.Location = new Point(34, 76);
-            LblCategoria.Margin = new Padding(4, 0, 4, 0);
+            LblCategoria.Location = new Point(39, 101);
+            LblCategoria.Margin = new Padding(5, 0, 5, 0);
             LblCategoria.Name = "LblCategoria";
-            LblCategoria.Size = new Size(75, 19);
+            LblCategoria.Size = new Size(94, 23);
             LblCategoria.TabIndex = 0;
             LblCategoria.Text = "Categoria";
-            
             // 
             // LblDescripciónCategoria
             // 
             LblDescripciónCategoria.AutoSize = true;
             LblDescripciónCategoria.Font = new Font("Times New Roman", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             LblDescripciónCategoria.ForeColor = Color.White;
-            LblDescripciónCategoria.Location = new Point(34, 136);
-            LblDescripciónCategoria.Margin = new Padding(4, 0, 4, 0);
+            LblDescripciónCategoria.Location = new Point(39, 181);
+            LblDescripciónCategoria.Margin = new Padding(5, 0, 5, 0);
             LblDescripciónCategoria.Name = "LblDescripciónCategoria";
-            LblDescripciónCategoria.Size = new Size(88, 19);
+            LblDescripciónCategoria.Size = new Size(108, 23);
             LblDescripciónCategoria.TabIndex = 1;
             LblDescripciónCategoria.Text = "Descripción";
-           
             // 
             // TxtCategoria
             // 
             TxtCategoria.BackColor = Color.MintCream;
             TxtCategoria.BorderStyle = BorderStyle.FixedSingle;
             TxtCategoria.ForeColor = SystemColors.ActiveCaptionText;
-            TxtCategoria.Location = new Point(37, 102);
-            TxtCategoria.Margin = new Padding(4, 3, 4, 3);
+            TxtCategoria.Location = new Point(42, 136);
+            TxtCategoria.Margin = new Padding(5, 4, 5, 4);
             TxtCategoria.Name = "TxtCategoria";
-            TxtCategoria.Size = new Size(310, 23);
+            TxtCategoria.Size = new Size(354, 27);
             TxtCategoria.TabIndex = 3;
-            TxtCategoria.TextChanged += TxtCategoria_TextChanged;
             // 
             // TxtDescripcion
             // 
             TxtDescripcion.BackColor = Color.MintCream;
             TxtDescripcion.BorderStyle = BorderStyle.FixedSingle;
             TxtDescripcion.ForeColor = SystemColors.ActiveCaptionText;
-            TxtDescripcion.Location = new Point(37, 162);
-            TxtDescripcion.Margin = new Padding(4, 3, 4, 3);
+            TxtDescripcion.Location = new Point(42, 216);
+            TxtDescripcion.Margin = new Padding(5, 4, 5, 4);
             TxtDescripcion.Multiline = true;
             TxtDescripcion.Name = "TxtDescripcion";
-            TxtDescripcion.Size = new Size(310, 112);
+            TxtDescripcion.Size = new Size(354, 149);
             TxtDescripcion.TabIndex = 4;
-            TxtDescripcion.TextChanged += TxtDescripcion_TextChanged;
             // 
             // BtnGuardar
             // 
@@ -95,10 +91,10 @@
             BtnGuardar.FlatStyle = FlatStyle.Popup;
             BtnGuardar.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnGuardar.ForeColor = SystemColors.Control;
-            BtnGuardar.Location = new Point(38, 297);
-            BtnGuardar.Margin = new Padding(4, 3, 4, 3);
+            BtnGuardar.Location = new Point(43, 396);
+            BtnGuardar.Margin = new Padding(5, 4, 5, 4);
             BtnGuardar.Name = "BtnGuardar";
-            BtnGuardar.Size = new Size(138, 35);
+            BtnGuardar.Size = new Size(158, 47);
             BtnGuardar.TabIndex = 5;
             BtnGuardar.Text = "Guardar";
             BtnGuardar.UseVisualStyleBackColor = false;
@@ -110,10 +106,10 @@
             BtnCancelar.FlatStyle = FlatStyle.Popup;
             BtnCancelar.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnCancelar.ForeColor = SystemColors.Control;
-            BtnCancelar.Location = new Point(211, 297);
-            BtnCancelar.Margin = new Padding(4, 3, 4, 3);
+            BtnCancelar.Location = new Point(241, 396);
+            BtnCancelar.Margin = new Padding(5, 4, 5, 4);
             BtnCancelar.Name = "BtnCancelar";
-            BtnCancelar.Size = new Size(138, 35);
+            BtnCancelar.Size = new Size(158, 47);
             BtnCancelar.TabIndex = 6;
             BtnCancelar.Text = "Cancelar";
             BtnCancelar.UseVisualStyleBackColor = false;
@@ -124,32 +120,30 @@
             LblTituloCategoria.AutoSize = true;
             LblTituloCategoria.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             LblTituloCategoria.ForeColor = Color.White;
-            LblTituloCategoria.Location = new Point(35, 10);
-            LblTituloCategoria.Margin = new Padding(4, 0, 4, 0);
+            LblTituloCategoria.Location = new Point(40, 13);
+            LblTituloCategoria.Margin = new Padding(5, 0, 5, 0);
             LblTituloCategoria.Name = "LblTituloCategoria";
-            LblTituloCategoria.Size = new Size(206, 31);
+            LblTituloCategoria.Size = new Size(258, 39);
             LblTituloCategoria.TabIndex = 7;
             LblTituloCategoria.Text = "Titulo Categoria";
-            
             // 
             // TxTId_Categoria
             // 
             TxTId_Categoria.BackColor = Color.MintCream;
             TxTId_Categoria.BorderStyle = BorderStyle.FixedSingle;
             TxTId_Categoria.ForeColor = SystemColors.ActiveCaptionText;
-            TxTId_Categoria.Location = new Point(350, 65);
-            TxTId_Categoria.Margin = new Padding(4, 3, 4, 3);
+            TxTId_Categoria.Location = new Point(400, 87);
+            TxTId_Categoria.Margin = new Padding(5, 4, 5, 4);
             TxTId_Categoria.Name = "TxTId_Categoria";
-            TxTId_Categoria.Size = new Size(21, 23);
+            TxTId_Categoria.Size = new Size(24, 27);
             TxTId_Categoria.TabIndex = 7;
-            TxTId_Categoria.TextChanged += TxTId_Categoria_TextChanged;
             // 
             // FrmInsertarCategoria
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(47, 62, 153);
-            ClientSize = new Size(385, 346);
+            ClientSize = new Size(440, 461);
             Controls.Add(LblTituloCategoria);
             Controls.Add(TxTId_Categoria);
             Controls.Add(BtnCancelar);
@@ -159,11 +153,10 @@
             Controls.Add(LblDescripciónCategoria);
             Controls.Add(LblCategoria);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 3, 4, 3);
+            Margin = new Padding(5, 4, 5, 4);
             Name = "FrmInsertarCategoria";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FrmInsertarCategoria";
-            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
 

@@ -95,7 +95,6 @@ namespace FrmCategoria
             TxtBuscar.Name = "TxtBuscar";
             TxtBuscar.Size = new Size(629, 29);
             TxtBuscar.TabIndex = 5;
-            TxtBuscar.TextChanged += TxtBuscar_TextChanged_1;
             // 
             // panel1
             // 
@@ -118,7 +117,6 @@ namespace FrmCategoria
             labelcategoria.Size = new Size(447, 29);
             labelcategoria.TabIndex = 1;
             labelcategoria.Text = "ADMINISTRACIÓN DE CATEGORIAS";
-            labelcategoria.Click += labelproductos_Click;
             // 
             // DGCategoria
             // 

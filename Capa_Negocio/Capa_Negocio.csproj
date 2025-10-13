@@ -202,8 +202,10 @@
     <Compile Include="EmpleadoDTO.cs" />
     <Compile Include="EmpleadoMapper.cs" />
     <Compile Include="EmpleadoService.cs" />
+    <Compile Include="NEGCategoria.cs" />
     <Compile Include="NEGClientes.cs" />
     <Compile Include="NEGEmpleados.cs" />
+    <Compile Include="NEGProducto.cs" />
     <Compile Include="NEGRoles.cs" />
     <Compile Include="NEGSeguridad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
