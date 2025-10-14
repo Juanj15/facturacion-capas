@@ -5,7 +5,7 @@ Para ejecutar correctamente el sistema, se debe iniciar la solución completa de
 
 La aplicación se conecta a una base de datos en Azure SQL, por lo que no requiere ingresar credenciales locales para su ejecución: la cadena de conexión está configurada en el proyecto principal.  
 
-
+\
 ### ⚙️ Tecnologías utilizadas
 * Lenguaje: C# (.NET Framework 4.7.2)
 * Framework: Windows Forms
@@ -14,7 +14,7 @@ La aplicación se conecta a una base de datos en Azure SQL, por lo que no requie
 * Arquitectura: 3 capas (Datos – Negocio – Presentación)
 * Control de versiones: Git + GitHub  
 
-
+\
 ### 🧩 Arquitectura del sistema
 
 El sistema está dividido en tres capas principales:
@@ -32,7 +32,7 @@ El sistema está dividido en tres capas principales:
 **Proyecto:** Pantallas_Sistema_facturacion  
 **Descripción:** Contiene los formularios Windows Forms que conforman la interfaz gráfica del usuario.  
 
-
+\
 ### 📋 Módulos principales
 
 La aplicación está compuesta por varios módulos que permiten gestionar la información de manera integral:
@@ -44,7 +44,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 * 🔐 Seguridad: Asignación de usuarios y contraseñas.
 * ❓ Ayuda: Guía de uso y asistencia general.  
 
-
+\
 ### 🗂️ Formularios implementados
 | Formulario                | Descripción                                               |
 | ------------------------- | --------------------------------------------------------- |
@@ -58,29 +58,25 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 | `frmFacturas.cs`          | Generación y visualización de facturas.                   |
 | `frmAyuda.cs`             | Información general del sistema.                          |  
 
-
+\
 ### 🔐 Seguridad
-
 * Autenticación mediante usuario y contraseña
 * Validaciones de campos en la capa de negocio.
 * Los formularios de seguridad y empleados permiten asignar o modificar credenciales de forma controlada.
 
 ⚠️ Los archivos que contienen información sensible (por ejemplo, cadenas de conexión) están excluidos mediante .gitignore para proteger las credenciales.  
 
-
+\
 ### 👨‍💻 Equipo de desarrollo
-
 Proyecto desarrollado como parte de una asignatura universitaria por el equipo:
 * Laura Camila García López
 * Juan David García Vargas
 * Jaime Alberto Durán Zuleta
 * Juan José Jiménez Ortiz  
 
-
+\
 ### 🚀 Estado actual del proyecto
-
 ✅ Arquitectura por capas implementada  
 ✅ Conexión con Azure SQL Database  
 ✅ CRUD funcional en módulos principales  
-✅ Validaciones de negocio en formularios  
-🔄 Próximo paso: módulo de facturación con reportes  
+✅ Validaciones de negocio en formularios
