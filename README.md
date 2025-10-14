@@ -18,23 +18,18 @@ La aplicación se conecta a una base de datos en Azure SQL, por lo que no requie
 ### 🧩 Arquitectura del sistema
 
 El sistema está dividido en tres capas principales:
+
 **Capa:** Datos
-
 **Proyecto:** Capa_Datos
-
 **Descripción:** Contiene las clases DAO con la lógica de acceso a la base de datos (consultas SQL, inserciones, actualizaciones, eliminaciones).
 
 
 **Capa:** Negocio
-
 **Proyecto:** Capa_Negocio
-
 **Descripción:** Gestiona las reglas de negocio y validaciones antes de enviar o recibir datos de la capa de datos.
 
 **Capa:** Presentación
-
 **Proyecto:** Pantallas_Sistema_facturacion
-
 **Descripción:** Contiene los formularios Windows Forms que conforman la interfaz gráfica del usuario.
 
 
