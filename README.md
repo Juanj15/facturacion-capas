@@ -3,7 +3,7 @@
 Este proyecto es una solución completa desarrollada en C# con Windows Forms, que implementa la arquitectura por capas (Datos, Negocio y Presentación).
 Para ejecutar correctamente el sistema, se debe iniciar la solución completa desde Visual Studio (archivo .sln), lo cual carga automáticamente todos los módulos y formularios integrados.
 
-La aplicación se conecta a una base de datos en Azure SQL, por lo que no requiere ingresar credenciales locales para su ejecución: la cadena de conexión está configurada en el proyecto principal.
+La aplicación se conecta a una base de datos en Azure SQL, por lo que no requiere ingresar credenciales locales para su ejecución: la cadena de conexión está configurada en el proyecto principal.  
 
 
 ### ⚙️ Tecnologías utilizadas
@@ -12,7 +12,7 @@ La aplicación se conecta a una base de datos en Azure SQL, por lo que no requie
 * Base de datos: Azure SQL Database
 * Acceso a datos: ADO.NET (con procedimientos almacenados)
 * Arquitectura: 3 capas (Datos – Negocio – Presentación)
-* Control de versiones: Git + GitHub
+* Control de versiones: Git + GitHub  
 
 
 ### 🧩 Arquitectura del sistema
@@ -42,7 +42,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 * 🧩 Categorías: Gestión de categorías de productos.
 * 👤 Clientes: Registro y actualización de clientes.
 * 🔐 Seguridad: Asignación de usuarios y contraseñas.
-* ❓ Ayuda: Guía de uso y asistencia general.
+* ❓ Ayuda: Guía de uso y asistencia general.  
 
 
 ### 🗂️ Formularios implementados
@@ -56,7 +56,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 | `frmSeguridad.cs`         | Gestión de credenciales de usuario.                       |
 | `frmClientes.cs`          | Administración de clientes.                               |
 | `frmFacturas.cs`          | Generación y visualización de facturas.                   |
-| `frmAyuda.cs`             | Información general del sistema.                          |
+| `frmAyuda.cs`             | Información general del sistema.                          |  
 
 
 ### 🔐 Seguridad
@@ -65,7 +65,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 * Validaciones de campos en la capa de negocio.
 * Los formularios de seguridad y empleados permiten asignar o modificar credenciales de forma controlada.
 
-⚠️ Los archivos que contienen información sensible (por ejemplo, cadenas de conexión) están excluidos mediante .gitignore para proteger las credenciales.
+⚠️ Los archivos que contienen información sensible (por ejemplo, cadenas de conexión) están excluidos mediante .gitignore para proteger las credenciales.  
 
 
 ### 👨‍💻 Equipo de desarrollo
@@ -74,13 +74,13 @@ Proyecto desarrollado como parte de una asignatura universitaria por el equipo:
 * Laura Camila García López
 * Juan David García Vargas
 * Jaime Alberto Durán Zuleta
-* Juan José Jiménez Ortiz
+* Juan José Jiménez Ortiz  
 
 
 ### 🚀 Estado actual del proyecto
 
-✅ Arquitectura por capas implementada
-✅ Conexión con Azure SQL Database
-✅ CRUD funcional en módulos principales
-✅ Validaciones de negocio en formularios
-🔄 Próximo paso: módulo de facturación con reportes
+✅ Arquitectura por capas implementada  
+✅ Conexión con Azure SQL Database  
+✅ CRUD funcional en módulos principales  
+✅ Validaciones de negocio en formularios  
+🔄 Próximo paso: módulo de facturación con reportes  
