@@ -1,11 +1,11 @@
-💼 ### Sistema de Facturación – Aplicación de Escritorio
+### 💼 Sistema de Facturación – Aplicación de Escritorio
 
 Este proyecto es una solución completa desarrollada en C# con Windows Forms, que implementa la arquitectura por capas (Datos, Negocio y Presentación).
 Para ejecutar correctamente el sistema, se debe iniciar la solución completa desde Visual Studio (archivo .sln), lo cual carga automáticamente todos los módulos y formularios integrados.
 
 La aplicación se conecta a una base de datos en Azure SQL, por lo que no requiere ingresar credenciales locales para su ejecución: la cadena de conexión está configurada en el proyecto principal.
 
-⚙️ ### Tecnologías utilizadas
+### ⚙️ Tecnologías utilizadas
 * Lenguaje: C# (.NET Framework 4.7.2)
 * Framework: Windows Forms
 * Base de datos: Azure SQL Database
@@ -13,22 +13,22 @@ La aplicación se conecta a una base de datos en Azure SQL, por lo que no requie
 * Arquitectura: 3 capas (Datos – Negocio – Presentación)
 * Control de versiones: Git + GitHub
 
-🧩 ### Arquitectura del sistema
+### 🧩 Arquitectura del sistema
 
 El sistema está dividido en tres capas principales:
-** Capa: ** Datos
-** Proyecto: ** Capa_Datos
-** Descripción: ** Contiene las clases DAO con la lógica de acceso a la base de datos (consultas SQL, inserciones, actualizaciones, eliminaciones).
+**Capa:** Datos
+**Proyecto:** Capa_Datos
+**Descripción:** Contiene las clases DAO con la lógica de acceso a la base de datos (consultas SQL, inserciones, actualizaciones, eliminaciones).
 
-** Capa: ** Negocio
-** Proyecto: ** Capa_Negocio
-** Descripción: ** Gestiona las reglas de negocio y validaciones antes de enviar o recibir datos de la capa de datos.
+**Capa:** Negocio
+**Proyecto:** Capa_Negocio
+**Descripción:** Gestiona las reglas de negocio y validaciones antes de enviar o recibir datos de la capa de datos.
 
-** Capa: ** Presentación
-** Proyecto: ** Pantallas_Sistema_facturacion
-** Descripción: ** Contiene los formularios Windows Forms que conforman la interfaz gráfica del usuario.
+**Capa:** Presentación
+**Proyecto:** Pantallas_Sistema_facturacion
+**Descripción:** Contiene los formularios Windows Forms que conforman la interfaz gráfica del usuario.
 
-📋 ### Módulos principales
+### 📋 Módulos principales
 
 La aplicación está compuesta por varios módulos que permiten gestionar la información de manera integral:
 
@@ -39,7 +39,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 * 🔐 Seguridad: Asignación de usuarios y contraseñas.
 * ❓ Ayuda: Guía de uso y asistencia general.
 
-🗂️ ### Formularios implementados
+### 🗂️ Formularios implementados
 | Formulario                | Descripción                                               |
 | ------------------------- | --------------------------------------------------------- |
 | `frmPrincipal.cs`         | Ventana principal del sistema con pestañas de navegación. |
@@ -53,7 +53,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 | `frmAyuda.cs`             | Información general del sistema.                          |
 
 
-🔐 ### Seguridad
+### 🔐 Seguridad
 
 * Autenticación mediante usuario y contraseña
 * Validaciones de campos en la capa de negocio.
@@ -61,7 +61,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 
 ⚠️ Los archivos que contienen información sensible (por ejemplo, cadenas de conexión) están excluidos mediante .gitignore para proteger las credenciales.
 
-👨‍💻 ### Equipo de desarrollo
+### 👨‍💻 Equipo de desarrollo
 
 Proyecto desarrollado como parte de una asignatura universitaria por el equipo:
 * Laura Camila García López
@@ -69,7 +69,7 @@ Proyecto desarrollado como parte de una asignatura universitaria por el equipo:
 * Jaime Alberto Durán Zuleta
 * Juan José Jiménez Ortiz
 
-🚀 ### Estado actual del proyecto
+### 🚀 Estado actual del proyecto
 
 ✅ Arquitectura por capas implementada
 ✅ Conexión con Azure SQL Database
