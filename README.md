@@ -5,6 +5,7 @@ Para ejecutar correctamente el sistema, se debe iniciar la solución completa de
 
 La aplicación se conecta a una base de datos en Azure SQL, por lo que no requiere ingresar credenciales locales para su ejecución: la cadena de conexión está configurada en el proyecto principal.
 
+
 ### ⚙️ Tecnologías utilizadas
 * Lenguaje: C# (.NET Framework 4.7.2)
 * Framework: Windows Forms
@@ -13,20 +14,29 @@ La aplicación se conecta a una base de datos en Azure SQL, por lo que no requie
 * Arquitectura: 3 capas (Datos – Negocio – Presentación)
 * Control de versiones: Git + GitHub
 
+
 ### 🧩 Arquitectura del sistema
 
 El sistema está dividido en tres capas principales:
 **Capa:** Datos
+
 **Proyecto:** Capa_Datos
+
 **Descripción:** Contiene las clases DAO con la lógica de acceso a la base de datos (consultas SQL, inserciones, actualizaciones, eliminaciones).
 
+
 **Capa:** Negocio
+
 **Proyecto:** Capa_Negocio
+
 **Descripción:** Gestiona las reglas de negocio y validaciones antes de enviar o recibir datos de la capa de datos.
 
 **Capa:** Presentación
+
 **Proyecto:** Pantallas_Sistema_facturacion
+
 **Descripción:** Contiene los formularios Windows Forms que conforman la interfaz gráfica del usuario.
+
 
 ### 📋 Módulos principales
 
@@ -38,6 +48,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 * 👤 Clientes: Registro y actualización de clientes.
 * 🔐 Seguridad: Asignación de usuarios y contraseñas.
 * ❓ Ayuda: Guía de uso y asistencia general.
+
 
 ### 🗂️ Formularios implementados
 | Formulario                | Descripción                                               |
@@ -61,6 +72,7 @@ La aplicación está compuesta por varios módulos que permiten gestionar la inf
 
 ⚠️ Los archivos que contienen información sensible (por ejemplo, cadenas de conexión) están excluidos mediante .gitignore para proteger las credenciales.
 
+
 ### 👨‍💻 Equipo de desarrollo
 
 Proyecto desarrollado como parte de una asignatura universitaria por el equipo:
@@ -68,6 +80,7 @@ Proyecto desarrollado como parte de una asignatura universitaria por el equipo:
 * Juan David García Vargas
 * Jaime Alberto Durán Zuleta
 * Juan José Jiménez Ortiz
+
 
 ### 🚀 Estado actual del proyecto
 
